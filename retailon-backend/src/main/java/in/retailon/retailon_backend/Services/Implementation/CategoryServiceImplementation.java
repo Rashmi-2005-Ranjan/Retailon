@@ -5,8 +5,10 @@ import in.retailon.retailon_backend.IO.CategoryRequest;
 import in.retailon.retailon_backend.IO.CategoryResponse;
 import in.retailon.retailon_backend.Repositories.CategoryRepository;
 import in.retailon.retailon_backend.Services.CategoryService;
+import in.retailon.retailon_backend.Services.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,10 +18,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryServiceImplementation implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final FileUploadService fileUploadService;
 
     @Override
-    public CategoryResponse add(CategoryRequest request) {
+    public CategoryResponse add(CategoryRequest request , MultipartFile file) {
+        String imgUrl = fileUploadService.uploadFile ( file );
         CategoryEntity newCategory = convertToEntity ( request );
+        newCategory.setImgUrl ( imgUrl );
         newCategory = categoryRepository.save ( newCategory );
         return convertToResponse ( newCategory );
     }
@@ -28,7 +33,7 @@ public class CategoryServiceImplementation implements CategoryService {
     public List<CategoryResponse> read() {
         return categoryRepository.findAll ( )
                 .stream ( )
-                .map ( categoryEntity -> convertToResponse ( categoryEntity ) )
+                .map ( this::convertToResponse )
                 .collect ( Collectors.toList ( ) );
     }
 
@@ -36,6 +41,7 @@ public class CategoryServiceImplementation implements CategoryService {
     public void delete(String categoryId) {
         CategoryEntity existingCategory = categoryRepository.findByCategoryId ( categoryId )
                 .orElseThrow ( () -> new RuntimeException ( "Category Not Found With Id: " + categoryId ) );
+        fileUploadService.deleteFile ( existingCategory.getImgUrl ( ) );
         categoryRepository.delete ( existingCategory );
     }
 

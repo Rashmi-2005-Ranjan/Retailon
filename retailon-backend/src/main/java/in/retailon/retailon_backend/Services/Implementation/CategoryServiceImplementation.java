@@ -4,6 +4,7 @@ import in.retailon.retailon_backend.Entity.CategoryEntity;
 import in.retailon.retailon_backend.IO.CategoryRequest;
 import in.retailon.retailon_backend.IO.CategoryResponse;
 import in.retailon.retailon_backend.Repositories.CategoryRepository;
+import in.retailon.retailon_backend.Repositories.ItemRepository;
 import in.retailon.retailon_backend.Services.CategoryService;
 import in.retailon.retailon_backend.Services.FileUploadService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class CategoryServiceImplementation implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final FileUploadService fileUploadService;
+    private final ItemRepository itemRepository;
 
     @Override
     public CategoryResponse add(CategoryRequest request , MultipartFile file) {
@@ -46,6 +48,7 @@ public class CategoryServiceImplementation implements CategoryService {
     }
 
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
+        Integer itemsCount = itemRepository.countByCategoryId ( newCategory.getId ( ) );
         return CategoryResponse.builder ( )
                 .categoryId ( newCategory.getCategoryId ( ) )
                 .name ( newCategory.getName ( ) )
@@ -54,6 +57,7 @@ public class CategoryServiceImplementation implements CategoryService {
                 .imgUrl ( newCategory.getImgUrl ( ) )
                 .createdAt ( newCategory.getCreatedAt ( ) )
                 .updatedAt ( newCategory.getUpdatedAt ( ) )
+                .items ( itemsCount )
                 .build ( );
     }
 

@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Menubar from "./Components/Menubar/Menubar.jsx";
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
+import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
+import ManageCategory from "./Pages/Manage Categories/ManageCategory.jsx";
+import ManageUsers from "./Pages/Manage Users/ManageUsers.jsx";
+import ManageItems from "./Pages/Manage Items/ManageItems.jsx";
+import Explore from "./Pages/Explore/Explore.jsx";
+import {Toaster} from "react-hot-toast";
+import Login from "./Pages/Login/Login.jsx";
+import Landing from "./Pages/Landing/Landing.jsx";
+import OrderHistory from "./Pages/order History/OrderHistory.jsx";
+import {AppContext} from "./Context/AppContext.jsx";
+import {useContext} from "react";
+import NotFound from "./Pages/Not Found/NotFound.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+    const { auth } = useContext(AppContext);
+    const location = useLocation();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    const LoginRoute = ({element}) => {
+        if(auth.token)
+        {
+            return <Navigate to="/dashboard" replace />;
+        }
+        return element;
+    }
+    const ProtectedRoute = ({element,allowedRoles}) => {
+        if(!auth.token)
+        {
+            return <Navigate to="/login" replace />;
+        }
+        if(allowedRoles && !allowedRoles.includes(auth.role))
+        {
+            return <Navigate to="/dashboard" replace />;
+        }
+        return element;
+    }
 
-export default App
+    // Hide Menubar on Landing and Login pages
+    const hideMenu = location.pathname === "/" || location.pathname === "/login";
+
+    return (
+        <>
+            {!hideMenu && <Menubar/>}
+            <Toaster/>
+            <Routes>
+                {/* Common Routes */}
+                <Route path="/" element={<Landing/>}/>
+                <Route path="/login" element={<LoginRoute element={<Login />} />} />
+                <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />}/>} />
+                <Route path="/explore" element={<ProtectedRoute element={<Explore />}/>}/>
+                {/* Admin Only Routes */}
+                <Route path="/category" element={<ProtectedRoute element={<ManageCategory />} allowedRoles={['ROLE_ADMIN']} />} />
+                <Route path="/users" element={<ProtectedRoute element={<ManageUsers />} allowedRoles={["ROLE_ADMIN"]} />} />
+                <Route path="/items" element={<ProtectedRoute element={<ManageItems />} allowedRoles={["ROLE_ADMIN"]} /> } />
+                <Route path="/orders" element={<ProtectedRoute element={<OrderHistory />}/>}/>
+                {/* Wildcard Route */}
+                <Route path="*" element={<NotFound/>}/>
+            </Routes>
+        </>
+    );
+};
+
+export default App;

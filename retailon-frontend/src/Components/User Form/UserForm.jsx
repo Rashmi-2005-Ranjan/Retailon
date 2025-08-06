@@ -56,6 +56,7 @@ const UserForm = ({setUsers}) => {
                                         type="text"
                                         name="name"
                                         id="name"
+                                        required
                                         className="form-control"
                                         placeholder="John Doe"
                                         value={data.name}
@@ -66,6 +67,7 @@ const UserForm = ({setUsers}) => {
                                     <label htmlFor="email" className="form-label">Email</label>
                                     <input
                                         type="email"
+                                        required
                                         name="email"
                                         id="email"
                                         className="form-control"
@@ -80,6 +82,7 @@ const UserForm = ({setUsers}) => {
                                         type="password"
                                         name="password"
                                         id="password"
+                                        required
                                         className="form-control"
                                         placeholder="********"
                                         value={data.password}

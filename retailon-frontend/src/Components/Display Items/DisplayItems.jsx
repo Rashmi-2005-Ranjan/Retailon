@@ -1,4 +1,3 @@
-import './DisplayItems.css';
 import {useContext, useState} from "react";
 import {AppContext} from "../../context/AppContext.jsx";
 import Item from "../Item/Item.jsx";

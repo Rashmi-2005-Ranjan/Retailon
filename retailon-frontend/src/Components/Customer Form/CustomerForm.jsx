@@ -1,4 +1,3 @@
-import './CustomerForm.css';
 
 const CustomerForm = ({customerName, mobileNumber, setMobileNumber, setCustomerName}) => {
     return (

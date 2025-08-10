@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RetailonBackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RetailonBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run ( RetailonBackendApplication.class , args );
+    }
 
 }

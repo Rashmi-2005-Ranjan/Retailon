@@ -77,20 +77,22 @@ npm install
 npm start
 
 
-## 🔮 Future Enhancements  
+🔮 Future Enhancements
 
-- 📱 Mobile app version for shop owners and employees  
-- 📦 Inventory management with stock alerts  
-- 📢 Notifications for low stock and daily sales reports  
-- 📊 Advanced analytics & reporting  
-- 🌍 Multi-store support with centralized dashboard  
+📱 Mobile app version for shop owners and employees
 
----
+📦 Inventory management with stock alerts
 
-## 👤 Author  
+📢 Notifications for low stock and daily sales reports
 
-**Rashmi Ranjan Behera**  
-📍 Odisha, India  
-💻 Full-Stack Developer
+📊 Advanced analytics & reporting
 
-🔗 [GitHub Profile](https://github.com/Rashmi-2005-Ranjan)
+🌍 Multi-store support with centralized dashboard
+
+👤 Author
+
+Rashmi Ranjan Behera
+📍 Baripada, Odisha, India
+💻 Full-Stack Developer | Passionate about Retail Tech & Seamless Billing Solutions
+
+🔗 GitHub Profile

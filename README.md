@@ -76,7 +76,7 @@ npm install
 # Start the frontend
 npm start
 
-
+```
 🔮 Future Enhancements
 
 📱 Mobile app version for shop owners and employees

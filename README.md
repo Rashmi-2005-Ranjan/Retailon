@@ -74,7 +74,7 @@ cd frontend
 npm install
 
 # Start the frontend
-npm start
+npm run dev
 
 ```
 ## 🔮 Future Enhancements  
@@ -90,7 +90,6 @@ npm start
 ## 👤 Author  
 
 **Rashmi Ranjan Behera**  
-📍 Baripada, Odisha, India  
-💻 Full-Stack Developer | Passionate about Retail Tech & Seamless Billing Solutions  
-
+📍 Odisha, India  
+💻 Full-Stack Developer
 🔗 [GitHub Profile](https://github.com/Rashmi-2005-Ranjan)  
